@@ -1,6 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { Divider } from 'react-native-elements';
 
 const postFooterIcons = [
   {
@@ -40,7 +39,7 @@ const Posts = ({ post }) => {
       </View>
 
       <View style={styles.profileNameContainer}>
-        <Text style={styles.profileName}>{post.name} {post.isVerified === false ? console.log("not verified") : <Image source={{ uri: postFooterIcons[5].imageUrl }} style={{ width: 15, height : 15}} />} <Text style={styles.username}>@{post.user} · 22h</Text>     </Text>
+        <Text style={styles.profileName}>{post.name} {post.isVerified === false ? console.log("not verified") : <Image source={{ uri: postFooterIcons[5].imageUrl }} style={{ width: 15, height: 15 }} />} <Text style={styles.username}>@{post.user} · 22h</Text>     </Text>
         <Text numberOfLines={10} style={styles.content}>{post.caption}</Text>
 
         {post.imageUrl === null ? console.log("empty image") : <Image source={{ uri: post.imageUrl }} style={{ width: 250, height: 250, borderRadius: 10, marginTop: 10 }} />}
@@ -48,15 +47,17 @@ const Posts = ({ post }) => {
         <View style={styles.postBottomIcons}>
 
           <TouchableOpacity>
-            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[1].imageUrl }} />
+            <View>
+                <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[1].imageUrl }} /><Text style={{ color: 'gray', bottom: 19, left: 25}}>{post.comments}</Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[2].imageUrl }} />
+            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[2].imageUrl }} /><Text style={{ color: "gray", bottom: 19, left: 25}}>{post.retweet}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[0].imageUrl }} />
+            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[0].imageUrl }} /><Text style={{ color: "gray", bottom: 19, left: 25}}>{post.likes}</Text>
           </TouchableOpacity>
 
           <View style={{ marginRight: 50, marginLeft: 0 }}>
@@ -69,11 +70,13 @@ const Posts = ({ post }) => {
 
       </View>
 
-      <TouchableOpacity>
-        <View style={styles.moreButtonContainer}>
-          <Image style={styles.moreButton} source={{ uri: postFooterIcons[4].imageUrl }} />
-        </View>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity>
+          <View style={styles.moreButtonContainer}>
+            <Image style={styles.moreButton} source={{ uri: postFooterIcons[4].imageUrl }} />
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

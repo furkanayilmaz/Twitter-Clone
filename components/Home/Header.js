@@ -6,17 +6,16 @@ import { Divider } from 'react-native-elements';
 function Header() {
   return (
     <View style={styles.container}>
-    
       <TouchableOpacity>
         <View>
-          <Image source={{ uri: "https://avatars.githubusercontent.com/u/46174893?v=4"}} style={styles.profilePicture}/>
+          <Image source={{ uri: "https://avatars.githubusercontent.com/u/46174893?v=4" }} style={styles.profilePicture} />
         </View>
       </TouchableOpacity>
 
 
       <TouchableOpacity>
         <View>
-          <Image source={{ uri: "https://img.icons8.com/color/344/fff/twitter--v1.png"}} style={styles.twitterIcon}/>
+          <Image source={{ uri: "https://img.icons8.com/color/344/fff/twitter--v1.png" }} style={styles.twitterIcon} />
         </View>
       </TouchableOpacity>
 
@@ -25,7 +24,6 @@ function Header() {
           <Image source={require('../../assets/header_topright.png')} style={styles.featureIcon} />
         </View>
       </TouchableOpacity>
-
     </View>
   )
 }

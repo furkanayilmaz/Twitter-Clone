@@ -9,12 +9,8 @@ export const POSTS = [
         likes: 7870,
         caption: 'Let photography trigger your imagination',
         profile_picture: USERS[3].image,
-        comments: [
-            {
-                user: 'km_loins',
-                comment: '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥'
-            },
-        ]
+        comments: 50,
+        retweet: 5,
     },
     {
         imageUrl: null,
@@ -24,7 +20,8 @@ export const POSTS = [
         caption: "Pixel 6 & Pixel 6 Pro are here! Super excited and can't wait to see how people use them:) @madebygoogle",
         isVerified: USERS[5].isVerified,
         profile_picture: USERS[5].image,
-        comments: 2
+        comments: 2,
+        retweet: 20,
     },
     {
         imageUrl: "https://pbs.twimg.com/media/FJbrSbnWQAEMb4Y?format=jpg&name=small",
@@ -34,6 +31,7 @@ export const POSTS = [
         caption: "Back to the moon soon",
         profile_picture: USERS[4].image,
         isVerified: USERS[4].isVerified,
-        comments: 10
+        comments: 10,
+        retweet: 1000,
     },
 ]

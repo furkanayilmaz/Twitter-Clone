@@ -8,13 +8,12 @@ const HomePage = () => {
         <SafeAreaView style={style.container}>
             <Header />
 
-
-
             <ScrollView>
                 {POSTS.map((post, index) => (
                     <Posts post={post} key={index} />
                 ))}
             </ScrollView>
+
         </SafeAreaView>
 
     )
