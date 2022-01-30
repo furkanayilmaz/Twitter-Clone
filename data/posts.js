@@ -32,6 +32,6 @@ export const POSTS = [
         profile_picture: USERS[4].image,
         isVerified: USERS[4].isVerified,
         comments: 10,
-        retweet: 1000,
+        retweet: 1000
     },
 ]
