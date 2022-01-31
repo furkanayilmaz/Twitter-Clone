@@ -10,7 +10,7 @@ const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = React.useCallback(() => {
@@ -23,13 +23,13 @@ const HomePage = () => {
             <Header />
 
             <ScrollView>
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} style={{ color: "white"}}/>
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} style={{ color: "white" }} />
                 {POSTS.map((post, index) => (
                     <Posts post={post} key={index} />
                 ))}
             </ScrollView>
 
-            <CreatePostButton />
+            <CreatePostButton navigation={navigation}/>
 
             <BottomNavigation />
 

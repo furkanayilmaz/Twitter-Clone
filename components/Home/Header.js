@@ -1,14 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native"
 import { Divider } from 'react-native-elements';
-
+import { firebase } from '../../firebase';
 
 function Header() {
+
+  const handleSignout = async () => {
+    try {
+      await firebase.auth().signOut();
+      console.log("Signed out successfully!")
+    } catch (error) {
+      Alert.alert(error.message)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleSignout()}>
         <View>
-          <Image source={{ uri: "https://avatars.githubusercontent.com/u/46174893?v=4" }} style={styles.profilePicture} />
+          <Image source={{ uri: "https://avatars.githubusercontent.com/u/46174893?v=4" }} style={styles.profilePicture}/>
         </View>
       </TouchableOpacity>
 

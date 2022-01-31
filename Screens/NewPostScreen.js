@@ -3,21 +3,21 @@ import React from 'react';
 import HeaderPostScreen from '../components/NewPostScreen/HeaderPostScreen';
 import TweetInput from '../components/NewPostScreen/TweetInput';
 
-const NewPostScreen = () => {
+const NewPostScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-        <HeaderPostScreen />
+      <HeaderPostScreen navigation={navigation}/>
 
-        <TweetInput />
+      <TweetInput />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#15212c",
-        flex: 1
-    }
+  container: {
+    backgroundColor: "#15212c",
+    flex: 1
+  }
 })
 
 export default NewPostScreen;
