@@ -1,18 +1,37 @@
 import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
-import React, { useState } from 'react';
-import { auth, createUserWithEmailAndPassword } from '../../firebase';
+import React, { useState, useEffect } from 'react';
+import { auth, createUserWithEmailAndPassword, getDatabase, ref, set } from '../../firebase';
 
 const RegisterForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [randomPic, setRandomPic] = useState('');
+
+    useEffect(() => {
+        const getRandomPic = async () => {
+            const response = await fetch('https://randomuser.me/api/')
+            const data = await response.json()
+            return data.results[0].picture.large;
+        }
+
+
+        getRandomPic().then(pic => {
+            setRandomPic(pic)
+        })
+    }, [])
 
     function handleSignup(name, email, password) {
         createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            console.log("Account created!");
+            const db = getDatabase();
+            set(ref(db, "users/" + userCredential.user.uid), {
+                name: name,
+                email: email,
+                profile_picture: randomPic
+            });
         }).catch((error) => {
             Alert.alert(
-                'Auth Error',
+                'Account Creation Error',
                 error.message,
                 [
                     {
@@ -25,6 +44,7 @@ const RegisterForm = () => {
             )
         })
     }
+
 
     return (
         <View style={{ flexDirection: "column" }}>
