@@ -1,7 +1,31 @@
 import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { auth, createUserWithEmailAndPassword } from '../../firebase';
 
 const RegisterForm = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleSignup(name, email, password) {
+        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            console.log("Account created!");
+        }).catch((error) => {
+            Alert.alert(
+                'Auth Error',
+                error.message,
+                [
+                    {
+                        text: "OK",
+                        onPress: () => console.log("OK"),
+                        style: "cancel"
+                    },
+                    { text: 'Sign Up', onPress: () => navigation.push('SignupScreen') },
+                ]
+            )
+        })
+    }
+
     return (
         <View style={{ flexDirection: "column" }}>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -9,16 +33,16 @@ const RegisterForm = () => {
             </View>
 
             <View>
-                <TextInput style={styles.inputName} placeholder='Name' placeholderTextColor="gray" />
+                <TextInput style={styles.inputName} placeholder='Name' placeholderTextColor="gray" onChangeText={(name) => setName(name)} value={name} />
 
-                <TextInput style={styles.inputName} placeholder='Email' placeholderTextColor="gray" keyboardType='email-address' />
+                <TextInput style={styles.inputName} placeholder='Email' placeholderTextColor="gray" keyboardType='email-address' onChangeText={((email) => setEmail(email))} value={email} />
 
-                <TextInput style={styles.inputName} placeholder='Password' placeholderTextColor="gray" secureTextEntry={true} />
+                <TextInput style={styles.inputName} placeholder='Password' placeholderTextColor="gray" secureTextEntry={true} onChangeText={(password) => setPassword(password)} value={password} />
             </View>
 
             <View style={styles.buttonWrapper}>
                 <View style={styles.button}>
-                    <Button title='Sign up' color="#fff" disabled={true} onPress={() => Alert.alert("Button Pressed")} />
+                    <Button title='Sign up' color="#fff" disabled={email.length > 0 && password.length > 0 && name.length > 0 ? false : true} onPress={() => handleSignup(name, email, password)} />
                 </View>
             </View>
         </View>

@@ -1,6 +1,6 @@
-/* import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SignedInStack, SignedOutStack } from './navigation';
-import { firebase } from './firebase';
+import { onAuthStateChanged, auth } from './firebase';
 
 const AuthNavigation = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -10,11 +10,11 @@ const AuthNavigation = () => {
 
 
     useEffect(
-        () => firebase.auth().onAuthStateChanged(user => userHandler(user)),
+        () => onAuthStateChanged(auth, user => userHandler(user)),
         []
     )
 
     return <>{currentUser ? <SignedInStack /> : <SignedOutStack />}</>
 };
 
-export default AuthNavigation; */
+export default AuthNavigation;
