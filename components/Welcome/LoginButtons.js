@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import Divider from 'react-native-divider';
 
-const LoginGoogle = ({ navigation }) => {
+const LoginButtons = ({ navigation }) => {
   return (
     <View style={{ flexDirection: "column" }}>
       <TouchableOpacity style={{ flexDirection: "row", justifyContent: "center", backgroundColor: "white", borderRadius: 50, marginLeft: 20, marginRight: 20, marginTop: 130, height: 60 }}>
@@ -37,4 +37,4 @@ const LoginGoogle = ({ navigation }) => {
   );
 };
 
-export default LoginGoogle;
+export default LoginButtons;

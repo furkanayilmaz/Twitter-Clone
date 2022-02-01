@@ -1,15 +1,21 @@
 import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { firebase } from '../../firebase';
+import { auth, signInWithEmailAndPassword } from "../../firebase";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onLogin = async (emailLogin, passwordLogin) => {
+    const onLogin = (emailLogin, passwordLogin) => {
         try {
-            await firebase.auth().signInWithEmailAndPassword(emailLogin, passwordLogin)
-            console.log("Success Auth!")
+            signInWithEmailAndPassword(auth, emailLogin, passwordLogin).then((userCredential) => {
+                console.log("Working!")
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                console.log(errorCode, errorMessage)
+            })
         } catch (error) {
             Alert.alert(
                 'Auth Error',
@@ -34,14 +40,14 @@ const LoginForm = () => {
 
             <View>
 
-                <TextInput style={styles.inputName} placeholder='Email' placeholderTextColor="gray" keyboardType='default' onChangeText={(email) => setEmail(email)} value={email} autoCapitalize={false}/>
+                <TextInput style={styles.inputName} placeholder='Email' placeholderTextColor="gray" keyboardType='default' onChangeText={(email) => setEmail(email)} value={email} autoCapitalize={false} />
 
-                <TextInput style={styles.inputName} placeholder='Password' placeholderTextColor="gray" secureTextEntry={true} onChangeText={(password) => setPassword(password)} value={password} autoCapitalize={false}/>
+                <TextInput style={styles.inputName} placeholder='Password' placeholderTextColor="gray" secureTextEntry={true} onChangeText={(password) => setPassword(password)} value={password} autoCapitalize={false} />
             </View>
 
-            <View style={styles.buttonWrapper}>
+            <View style={styles.buttonWrapper} onPress={() => onLogin(email, password)}>
                 <View style={styles.button}>
-                    <Button title='Log in' color="#fff" disabled={email.length > 0 && password.length > 0 ? false : true} onPress={() => onLogin(email, password)}  />
+                    <Button title='Log in' color="#fff" disabled={email.length > 0 && password.length > 0 ? false : true} />
                 </View>
             </View>
 
