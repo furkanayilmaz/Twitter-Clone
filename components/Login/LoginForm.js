@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '../../firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-const LoginForm = () => {
+const LoginForm = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

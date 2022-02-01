@@ -8,7 +8,7 @@ const Login = ({ navigation }) => {
         <SafeAreaView style={{ backgroundColor: "#15212c", flex: 1 }}>
             <RegisterHeader navigation={navigation}/>
 
-            <LoginForm />
+            <LoginForm navigation={navigation}/>
         </SafeAreaView>
     );
 };

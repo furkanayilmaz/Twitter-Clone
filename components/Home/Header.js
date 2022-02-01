@@ -2,8 +2,14 @@ import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native"
 import { Divider } from 'react-native-elements';
 import { auth, signOut } from '../../firebase'
+import { getDatabase, ref, onValue } from "../../firebase"
 
 function Header() {
+  const [profilePic, setProfilePic] = React.useState('');
+
+  React.useEffect(() => {
+    getProfilePicture();
+  }, [])
 
   function handleSignout() {
     signOut(auth).then(() => {
@@ -23,11 +29,23 @@ function Header() {
     })
   }
 
+  function getProfilePicture() {
+    const db = getDatabase();
+    const userId = auth.currentUser.uid;
+    const userRef = ref(db, "users/" + userId);
+    onValue(userRef, (data) => {
+      if (data.val()) {
+        setProfilePic(data.val().profile_picture);
+        return data.val().profile_picture;
+      }
+    })
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleSignout()}>
         <View>
-          <Image source={{ uri: "https://avatars.githubusercontent.com/u/46174893?v=4" }} style={styles.profilePicture} />
+          <Image source={{ uri: profilePic }} style={styles.profilePicture} />
         </View>
       </TouchableOpacity>
 
