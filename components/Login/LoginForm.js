@@ -34,9 +34,9 @@ const LoginForm = ({ navigation }) => {
 
             <View>
 
-                <TextInput style={styles.inputName} placeholder='Email' placeholderTextColor="gray" keyboardType='default' onChangeText={(email) => setEmail(email)} value={email} autoCapitalize={false} />
+                <TextInput style={styles.inputName} placeholder='Email' placeholderTextColor="gray" keyboardType='default' onChangeText={(email) => setEmail(email)} value={email} autoCapitalize='none' />
 
-                <TextInput style={styles.inputName} placeholder='Password' placeholderTextColor="gray" secureTextEntry={true} onChangeText={(password) => setPassword(password)} value={password} autoCapitalize={false} />
+                <TextInput style={styles.inputName} placeholder='Password' placeholderTextColor="gray" secureTextEntry={true} onChangeText={(password) => setPassword(password)} value={password} autoCapitalize='none' />
             </View>
 
             <View style={styles.buttonWrapper}>

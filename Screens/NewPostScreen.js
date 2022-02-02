@@ -8,7 +8,7 @@ const NewPostScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <HeaderPostScreen navigation={navigation}/>
 
-      <TweetInput />
+      <TweetInput navigation={navigation}/>
     </SafeAreaView>
   );
 };
