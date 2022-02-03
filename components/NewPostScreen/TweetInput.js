@@ -1,31 +1,64 @@
-import { View, Text, TextInput, StyleSheet, Image } from 'react-native';
-import React, { useState, createContext } from 'react';
-import { getDatabase, ref, set } from '../../firebase';
-import HeaderPostScreen from './HeaderPostScreen';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Button, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { getDatabase, ref, set, push } from '../../firebase';
+import { auth } from "../../firebase";
 
-export const tweetContext = createContext();
-export const Attachment = createContext();
-
-const TweetInput = () => {
+const TweetInput = ({ navigation }) => {
     const [tweet, setTweet] = useState('');
-    const [profilePic, setProfilePic] = useState('');
+    const [attachmentUrl, setAttachmentUrl] = useState('');
+
+
+    const submitTweet = async (tweetPara, attachmentPara) => {
+        const db = getDatabase();
+        await set(ref(db, 'posts/' + push), {
+            tweet: tweetPara,
+            attachment: attachmentPara,
+            postFrom: auth.currentUser.uid,
+        }).then(function(response){
+            console.log(response);
+            navigation.goBack()
+        }).catch(function(err){
+            Alert.alert(err);
+
+            throw err;
+        })
+    }
 
     return (
-        <View style={{ flexDirection: "row", bottom: 20 }}>
-            <Image source={{ uri: "https://pbs.twimg.com/profile_images/1212876693653749761/24JwKLBD_200x200.jpg" }} style={{ width: 40, height: 40, borderRadius: 50, marginLeft: 20 }} />
-            <TextInput placeholder="What's happening?" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, marginLeft: 10, width: 300, height: 300 }} multiline={true} maxLength={280} spellCheck={true} keyboardType='twitter' onChangeText={(tweetInput) => setTweet(tweetInput)} value={tweet} />
+        <View>
 
-            <TextInput placeholder="Add Image URL" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, width: 300, height: 300, right: 350, top: 300 }} keyboardType='url' onChangeText={(url) => setProfilePic(url)} value={profilePic} />
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={{ color: "white", fontSize: 17 }}>Cancel</Text>
+                </TouchableOpacity>
 
-            <tweetContext.Provider value={tweet}>
-                <Attachment.Provider value={profilePic}>
 
-                    <HeaderPostScreen />
-                    
-                </Attachment.Provider>
-            </tweetContext.Provider>
+                <View style={{ bottom: 10, backgroundColor: "#2c8eef", borderRadius: 50, width: 80, }}>
+                    <Button title='Tweet' color="#fff" disabled={tweet.length > 0 && attachmentUrl.length > 0 ? false : true} onPress={() => submitTweet(tweet, attachmentUrl)} />
+                </View>
+            </View>
+
+
+
+            <View style={{ flexDirection: "row", bottom: 20 }}>
+                <Image source={{ uri: "https://pbs.twimg.com/profile_images/1212876693653749761/24JwKLBD_200x200.jpg" }} style={{ width: 40, height: 40, borderRadius: 50, marginLeft: 20 }} />
+                <TextInput placeholder="What's happening?" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, marginLeft: 10, width: 300, height: 300 }} multiline={true} maxLength={280} spellCheck={true} keyboardType='twitter' onChangeText={(tweetInput) => setTweet(tweetInput)} value={tweet} />
+
+                <TextInput placeholder="Add Image URL" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, width: 300, height: 300, right: 350, top: 300 }} keyboardType='url' onChangeText={(url) => setAttachmentUrl(url)} value={attachmentUrl} />
+            </View>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 20,
+    },
+    button: {
+        backgroundColor: "#2c8eef"
+    }
+})
 
 export default TweetInput;

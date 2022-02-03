@@ -23,7 +23,7 @@ const HomePage = ({ navigation }) => {
             <Header />
 
             <ScrollView>
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} style={{ color: "white" }} />
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh}  />
                 {POSTS.map((post, index) => (
                     <Posts post={post} key={index} />
                 ))}

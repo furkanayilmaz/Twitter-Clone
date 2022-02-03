@@ -6,7 +6,7 @@ import TweetInput from '../components/NewPostScreen/TweetInput';
 const NewPostScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderPostScreen navigation={navigation}/>
+       {/* <HeaderPostScreen navigation={navigation}/> */}
 
       <TweetInput navigation={navigation}/>
     </SafeAreaView>

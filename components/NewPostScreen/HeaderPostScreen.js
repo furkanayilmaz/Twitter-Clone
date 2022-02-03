@@ -24,6 +24,7 @@ const HeaderPostScreen = ({ navigation }) => {
         set(ref(db, "posts/" + push()), {
             tweet: tweetInfo,
             attachment: attachmentInfo,
+            postFrom: auth().currentUser.uid,
         });
     }
 
