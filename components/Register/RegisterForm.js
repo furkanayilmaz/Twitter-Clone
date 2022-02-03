@@ -27,7 +27,8 @@ const RegisterForm = () => {
             set(ref(db, "users/" + userCredential.user.uid), {
                 name: name,
                 email: email,
-                profile_picture: randomPic
+                profile_picture: randomPic,
+                isVerified: false
             });
         }).catch((error) => {
             Alert.alert(
