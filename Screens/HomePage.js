@@ -29,9 +29,9 @@ const HomePage = ({ navigation }) => {
                 data.push(child.val());
             })
             setPosts(data);
-            // console.log(data)
+            console.log(data)
         })
-    }, []) 
+    }, [refreshing]) 
 
     return (
         <SafeAreaView style={style.container}>

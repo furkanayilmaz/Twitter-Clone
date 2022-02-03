@@ -4,7 +4,6 @@ import { getDatabase, ref, set, onValue } from '../../firebase';
 import { auth } from "../../firebase";
 import uuid from 'react-native-uuid';
 
-
 const TweetInput = ({ navigation }) => {
     const [tweet, setTweet] = useState('');
     const [attachmentUrl, setAttachmentUrl] = useState('');
@@ -24,7 +23,10 @@ const TweetInput = ({ navigation }) => {
             attachment: attachmentPara,
             postFrom: auth.currentUser.uid,
             picture: profilePic,
-            name: name
+            name: name,
+            likes: 0,
+            comments: 0,
+            retweet: 0,
         }).then(function (response) {
             console.log(response);
             navigation.goBack()
@@ -69,7 +71,7 @@ const TweetInput = ({ navigation }) => {
 
 
                 <View style={{ bottom: 10, backgroundColor: "#2c8eef", borderRadius: 50, width: 80, }}>
-                    <Button title='Tweet' color="#fff" disabled={tweet.length > 0 && attachmentUrl.length > 0 ? false : true} onPress={() => submitTweet(tweet, attachmentUrl)} />
+                    <Button title='Tweet' color="#fff" disabled={tweet.length > 0 ? false : true} onPress={() => submitTweet(tweet, attachmentUrl)} />
                 </View>
             </View>
 
@@ -79,7 +81,7 @@ const TweetInput = ({ navigation }) => {
                 <Image source={{ uri: profilePic }} style={{ width: 40, height: 40, borderRadius: 50, marginLeft: 20 }} />
                 <TextInput placeholder="What's happening?" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, marginLeft: 10, width: 300, height: 300 }} multiline={true} maxLength={280} spellCheck={true} keyboardType='twitter' onChangeText={(tweetInput) => setTweet(tweetInput)} value={tweet} />
 
-                <TextInput placeholder="Add Image URL" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, width: 300, height: 300, right: 350, top: 300 }} keyboardType='url' onChangeText={(url) => setAttachmentUrl(url)} value={attachmentUrl} autoCorrect={false}/>
+                <TextInput placeholder="Add Image URL" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, width: 300, height: 300, right: 350, top: 300 }} keyboardType='url' onChangeText={(url) => setAttachmentUrl(url)} value={attachmentUrl} autoCorrect={false} />
             </View>
         </View>
     );

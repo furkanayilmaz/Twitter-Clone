@@ -1,5 +1,6 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { useValidateImageURL } from 'use-validate-image-url'
 
 const postFooterIcons = [
   {
@@ -30,6 +31,7 @@ const postFooterIcons = [
 ]
 
 const Posts = ({ post }) => {
+  // const status = useValidateImageURL(post.attachment);
 
   return (
     <View style={styles.container}>
@@ -39,25 +41,25 @@ const Posts = ({ post }) => {
       </View>
 
       <View style={styles.profileNameContainer}>
-        <Text style={styles.profileName}>{post.name} {post.isVerified === false ? console.log("not verified") : <Image source={{ uri: postFooterIcons[5].imageUrl }} style={{ width: 15, height: 15 }} />} <Text style={styles.username}>{} {/*· */}</Text>     </Text>
+        <Text style={styles.profileName}>{post.name} {post.isVerified === false ? console.log("not verified") : <Image source={{ uri: postFooterIcons[5].imageUrl }} style={{ width: 15, height: 15 }} />} <Text style={styles.username}>{ } {/*· */}</Text>     </Text>
         <Text numberOfLines={10} style={styles.content}>{post.tweet}</Text>
 
-        {post.attachment === null ? console.log("empty image") : <Image source={{ uri: post.attachment }} style={{ width: 250, height: 250, borderRadius: 10, marginTop: 10 }} />}
+        {post.attachment === ''  ? console.log("empty image") : <Image source={{ uri: post.attachment }} style={{ width: 250, height: 250, borderRadius: 10, marginTop: 10 }} />}
 
         <View style={styles.postBottomIcons}>
 
           <TouchableOpacity>
             <View>
-                <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[1].imageUrl }} /><Text style={{ color: 'gray', bottom: 19, left: 25}}>{post.comments}</Text>
+              <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[1].imageUrl }} /><Text style={{ color: 'gray', bottom: 19, left: 25 }}>{post.comments}</Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[2].imageUrl }} /><Text style={{ color: "gray", bottom: 19, left: 25}}>{post.retweet}</Text>
+            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[2].imageUrl }} /><Text style={{ color: "gray", bottom: 19, left: 25 }}>{post.retweet}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[0].imageUrl }} /><Text style={{ color: "gray", bottom: 19, left: 25}}>{post.likes}</Text>
+            <Image style={{ width: 20, height: 20, }} source={{ uri: postFooterIcons[0].imageUrl }} /><Text style={{ color: "gray", bottom: 19, left: 25 }}>{post.likes}</Text>
           </TouchableOpacity>
 
           <View style={{ marginRight: 50, marginLeft: 0 }}>
