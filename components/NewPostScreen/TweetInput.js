@@ -1,7 +1,9 @@
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Button, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { getDatabase, ref, set, push } from '../../firebase';
+import { getDatabase, ref, set } from '../../firebase';
 import { auth } from "../../firebase";
+import uuid from 'react-native-uuid';
+
 
 const TweetInput = ({ navigation }) => {
     const [tweet, setTweet] = useState('');
@@ -10,7 +12,7 @@ const TweetInput = ({ navigation }) => {
 
     const submitTweet = async (tweetPara, attachmentPara) => {
         const db = getDatabase();
-        await set(ref(db, 'posts/' + push), {
+        await set(ref(db, 'posts/' + uuid.v4()), {
             tweet: tweetPara,
             attachment: attachmentPara,
             postFrom: auth.currentUser.uid,
