@@ -1,6 +1,6 @@
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Button, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { getDatabase, ref, set } from '../../firebase';
+import { getDatabase, ref, set, onValue } from '../../firebase';
 import { auth } from "../../firebase";
 import uuid from 'react-native-uuid';
 
@@ -8,6 +8,13 @@ import uuid from 'react-native-uuid';
 const TweetInput = ({ navigation }) => {
     const [tweet, setTweet] = useState('');
     const [attachmentUrl, setAttachmentUrl] = useState('');
+    const [profilePic, setProfilePic] = useState('');
+    const [name, setName] = useState('');
+
+    React.useEffect(() => {
+        getProfilePicture();
+        getName();
+    }, [])
 
 
     const submitTweet = async (tweetPara, attachmentPara) => {
@@ -16,13 +23,39 @@ const TweetInput = ({ navigation }) => {
             tweet: tweetPara,
             attachment: attachmentPara,
             postFrom: auth.currentUser.uid,
-        }).then(function(response){
+            picture: profilePic,
+            name: name
+        }).then(function (response) {
             console.log(response);
             navigation.goBack()
-        }).catch(function(err){
+        }).catch(function (err) {
             Alert.alert(err);
 
             throw err;
+        })
+    }
+
+    function getProfilePicture() {
+        const db = getDatabase();
+        const userId = auth.currentUser.uid;
+        const userRef = ref(db, "users/" + userId);
+        onValue(userRef, (data) => {
+            if (data.val()) {
+                setProfilePic(data.val().profile_picture);
+                return data.val().profile_picture;
+            }
+        })
+    }
+
+    function getName() {
+        const db = getDatabase();
+        const userId = auth.currentUser.uid;
+        const userRef = ref(db, "users/" + userId);
+        onValue(userRef, (data) => {
+            if (data.val()) {
+                setName(data.val().name);
+                return data.val().name;
+            }
         })
     }
 
@@ -43,10 +76,10 @@ const TweetInput = ({ navigation }) => {
 
 
             <View style={{ flexDirection: "row", bottom: 20 }}>
-                <Image source={{ uri: "https://pbs.twimg.com/profile_images/1212876693653749761/24JwKLBD_200x200.jpg" }} style={{ width: 40, height: 40, borderRadius: 50, marginLeft: 20 }} />
+                <Image source={{ uri: profilePic }} style={{ width: 40, height: 40, borderRadius: 50, marginLeft: 20 }} />
                 <TextInput placeholder="What's happening?" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, marginLeft: 10, width: 300, height: 300 }} multiline={true} maxLength={280} spellCheck={true} keyboardType='twitter' onChangeText={(tweetInput) => setTweet(tweetInput)} value={tweet} />
 
-                <TextInput placeholder="Add Image URL" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, width: 300, height: 300, right: 350, top: 300 }} keyboardType='url' onChangeText={(url) => setAttachmentUrl(url)} value={attachmentUrl} />
+                <TextInput placeholder="Add Image URL" placeholderTextColor="gray" style={{ color: "white", fontSize: 20, width: 300, height: 300, right: 350, top: 300 }} keyboardType='url' onChangeText={(url) => setAttachmentUrl(url)} value={attachmentUrl} autoCorrect={false}/>
             </View>
         </View>
     );

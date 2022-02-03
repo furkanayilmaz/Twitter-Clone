@@ -35,14 +35,14 @@ const Posts = ({ post }) => {
     <View style={styles.container}>
 
       <View style={styles.profilePictureContainer}>
-        <Image style={styles.profileImage} source={{ uri: post.profile_picture }} />
+        <Image style={styles.profileImage} source={{ uri: post.picture }} />
       </View>
 
       <View style={styles.profileNameContainer}>
-        <Text style={styles.profileName}>{post.name} {post.isVerified === false ? console.log("not verified") : <Image source={{ uri: postFooterIcons[5].imageUrl }} style={{ width: 15, height: 15 }} />} <Text style={styles.username}>@{post.user} · 22h</Text>     </Text>
-        <Text numberOfLines={10} style={styles.content}>{post.caption}</Text>
+        <Text style={styles.profileName}>{post.name} {post.isVerified === false ? console.log("not verified") : <Image source={{ uri: postFooterIcons[5].imageUrl }} style={{ width: 15, height: 15 }} />} <Text style={styles.username}>{} {/*· */}</Text>     </Text>
+        <Text numberOfLines={10} style={styles.content}>{post.tweet}</Text>
 
-        {post.imageUrl === null ? console.log("empty image") : <Image source={{ uri: post.imageUrl }} style={{ width: 250, height: 250, borderRadius: 10, marginTop: 10 }} />}
+        {post.attachment === null ? console.log("empty image") : <Image source={{ uri: post.attachment }} style={{ width: 250, height: 250, borderRadius: 10, marginTop: 10 }} />}
 
         <View style={styles.postBottomIcons}>
 
